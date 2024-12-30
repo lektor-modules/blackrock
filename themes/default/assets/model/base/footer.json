@@ -1,0 +1,12 @@
+[
+    {
+        "type"  : "block",
+        "elem"  : "h1",
+        "value" : "Footer Skins",
+        "attribute" : {
+            "id"    : "footer",
+            "class" : "footer"
+
+        }
+    }
+]

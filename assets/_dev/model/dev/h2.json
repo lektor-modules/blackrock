@@ -1,0 +1,20 @@
+{
+    "type"  : "block",
+    "elem"  : "h2",
+    "value" : "Heading 2",
+    "attribute" : {
+        "id"              : "heading-id-2",
+        "class"           : "heading-class-2",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    }
+}

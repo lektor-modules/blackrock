@@ -1,0 +1,26 @@
+{{- $data := dict -}}
+{{- $page := . -}}
+{{- $site := .Site -}}
+{{- $json := "" -}}
+{{- $skin := "model/base/footer.json" }}
+{{- $devs := "_dev/model/base/footer.json" }}
+{{- $core := "_core/model/base/footer.json" }}
+
+
+{{- if and ( eq .Site.Params.debug true ) ( eq .Site.Params.devel true ) -}}
+	{{- $json = $devs -}}
+{{- else if resources.Get $skin -}}
+	{{- $json = $skin -}}
+{{- else -}}
+	{{- $json = $core -}}
+{{- end -}}
+
+
+{{- with resources.Get $json -}}
+<footer>
+	{{- $data = . | transform.Unmarshal -}}
+	{{- range $keys, $rows := $data  -}}
+		{{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" $rows ) -}}
+	{{- end -}}
+</footer>
+{{- end -}}

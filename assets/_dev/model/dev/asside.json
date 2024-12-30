@@ -1,0 +1,20 @@
+{
+    "type" : "block",
+    "elem" : "asside",
+    "attribute" : {
+        "id"              : "asside-id",
+        "class"           : "asside-class",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    },
+    "child" : []
+}

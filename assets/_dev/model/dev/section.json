@@ -1,0 +1,21 @@
+
+{
+    "type" : "block",
+    "elem" : "section",
+    "attribute" : {
+        "id"              : "section-id",
+        "class"           : "section-class",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    },
+    "child" : []
+}

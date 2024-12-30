@@ -1,0 +1,13 @@
+{
+    "type"  : "block",
+    "elem"  : "jsm",
+    "value" : "_dev/scripts/jsm.js",
+    "attribute"  : {
+        "id"     : "jsm-id",
+        "async"  : true,
+        "defer"  : false,
+        "inline" : false,
+        "crossorigin" : "",
+        "referrerpolicy" : ""
+    }
+}

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ -d "public" ]];then
+    rm -fr public
+fi
+
+
+themes=$(jq '.theme' config/_default/params.json | sed -e 's/^"//' -e 's/"$//' )
+twstat=$(jq '.tailwind' themes/$themes/assets/model/base/vendor.json | sed -e 's/^"//' -e 's/"$//' )
+
+
+if [[ $twstat -eq "true" ]];then
+    tailwindcss -c ./assets/vend/tailwind/tailwind.config.js -i ./assets/vend/tailwind/input.css  -o "./themes/$themes/assets/static/script/css/tailwind.css"
+fi
+hugo

@@ -1,0 +1,20 @@
+{
+    "type" : "block",
+    "elem" : "h6",
+    "value" : "Heading 6",
+    "attribute" : {
+        "id"              : "heading-id-6",
+        "class"           : "heading-class-6",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    }
+}

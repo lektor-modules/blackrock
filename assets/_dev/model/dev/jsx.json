@@ -1,0 +1,13 @@
+{
+    "type"  : "block",
+    "elem"  : "jsx",
+    "value" : "_dev/scripts/jsx.js",
+    "attribute" : {
+        "id"     : "jsx-id",
+        "async"  : true,
+        "defer"  : false,
+        "inline" : true,
+        "crossorigin" : "",
+        "referrerpolicy" : ""
+    }
+}

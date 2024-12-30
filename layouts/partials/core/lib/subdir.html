@@ -1,0 +1,7 @@
+{{- $page := .page -}}
+{{- $site := .site -}}
+{{- with .data  -}}
+    {{- range . -}}
+        {{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" . ) -}}
+    {{- end -}}
+{{- end -}}

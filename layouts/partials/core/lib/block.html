@@ -1,0 +1,16 @@
+{{- $path :=  "" -}}
+{{- $site := .site -}}
+{{- $page := .page -}}
+{{- $data := .data -}}
+
+{{- if and ( eq .site.Params.devel true ) ( eq .data.value "devel" ) -}}
+	{{- $path = printf "_dev/model/dev/%s.json" .data.elem  -}}
+    {{- $data = resources.Get $path -}}
+    {{- $data = $data | transform.Unmarshal -}}
+{{- end -}}
+
+
+{{- if $data -}}
+    {{- $path := printf "core/dev/%s.html" $data.elem -}}
+    {{- partial $path (dict "page" $page "site" $site "data" $data ) -}}
+{{- end -}}

@@ -1,0 +1,24 @@
+{{- $json := "" }}
+{{- $skin := "model/base/vendor.json" }}
+{{- $core := "_core/model/base/vendor.json" }}
+{{- $path := printf "static/script/css/tailwind.css" -}}
+
+
+{{- if resources.Get $skin -}}
+	{{- $json = $skin -}}
+{{- else -}}
+	{{- $json = $core -}}
+{{- end -}}
+
+
+{{- with resources.Get $json -}}
+	{{- $conf := . | transform.Unmarshal -}}
+	{{- if and ( eq hugo.IsProduction true ) ( eq $conf.tailwind true  ) -}}
+		{{- with resources.Get $path -}}
+			{{- $opts := dict "minify" true -}}
+			{{- with . | fingerprint -}}
+				<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+			{{- end -}}
+		{{- end -}}
+	{{- end -}}
+{{- end -}}

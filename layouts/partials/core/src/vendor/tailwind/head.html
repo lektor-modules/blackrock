@@ -1,0 +1,18 @@
+{{- $json := "" }}
+{{- $skin := "model/base/vendor.json" }}
+{{- $core := "_core/model/base/vendor.json" }}
+
+
+{{- if resources.Get $skin -}}
+	{{- $json = $skin -}}
+{{- else -}}
+	{{- $json = $core -}}
+{{- end -}}
+
+
+{{- with resources.Get $json -}}
+	{{- $conf := . | transform.Unmarshal -}}
+	{{- if and ( eq hugo.IsDevelopment true ) ( eq $conf.tailwind true  ) -}}
+		<script src="https://cdn.tailwindcss.com"></script>
+	{{- end -}}
+{{- end -}}

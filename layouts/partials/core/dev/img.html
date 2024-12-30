@@ -1,0 +1,69 @@
+{{- with .data -}}
+    {{- if .value -}}
+        {{- $get := partial "core/lib/rezget.html" ( dict "data" .value  ) }}
+        {{- $val := $get.Process "webp"  -}}
+        {{- $atr := .attribute -}}
+        {{- $src := .source  -}}
+        {{- $alt := $atr.alt  -}}
+        {{- $cls := $atr.class  -}}
+        {{- $wid := $atr.width  -}}
+        {{- $hgt := $atr.height  -}}
+
+        <figure {{- with $atr.class }} class="{{ . }}" {{- end -}}>
+            {{- if $val -}}
+            <picture>
+
+                {{- if $src.xxl -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.xxl "size" "xxl" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "xxl" ) -}}
+                {{- end -}}
+
+
+                {{- if $src.xl -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.xl "size" "xl" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "xl" ) -}}
+                {{- end -}}
+                
+
+                {{- if $src.lg -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.lg "size" "lg" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "lg" ) -}}
+                {{- end -}}
+
+                
+                {{- if $src.md -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.md "size" "md" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "md" ) -}}
+                {{- end -}}
+
+                
+                {{- if $src.sm -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.sm "size" "sm" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "sm" ) -}}
+                {{- end -}}
+
+               
+                {{- if $src.xs -}}
+                    {{- partial "core/lib/imgrez" ( dict "src" $src.xs "size" "xs" ) -}}
+                {{ else }}
+                    {{- partial "core/lib/imgrez" ( dict "src" $val "size" "xs" ) -}}
+                {{- end -}}
+
+                
+                {{- if and $val $alt  -}}
+                    <img src="{{ $val.RelPermalink }}" alt="{{ $alt }}" width="{{ $val.Width }}" height="{{ $val.Height }}" {{- with $cls }} class="src-{{ . }}" {{- end -}} {{ with $atr.lazy }} loading="lazy"{{- end }} style="width:auto; height: auto;" />
+                {{- end -}}
+
+            </picture>
+            {{- end -}}
+            {{- with .caption -}}
+                <figcaption {{- with $cls }} class="fig-{{ . }}" {{- end -}}>{{- . -}}</figcaption>
+            {{- end -}}
+        </figure>
+    {{- end -}}
+{{- end -}}

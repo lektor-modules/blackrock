@@ -1,0 +1,20 @@
+{
+    "type" : "block",
+    "elem" : "h4",
+    "value" : "Heading 4",
+    "attribute" : {
+        "id"              : "heading-id-4",
+        "class"           : "heading-class-4",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    }
+}

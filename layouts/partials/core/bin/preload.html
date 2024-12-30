@@ -1,0 +1,44 @@
+{{- $page := . -}}
+{{- $json := "" -}}
+{{- $data := dict -}}
+{{- $site := .Site -}}
+{{- $skin := "model/base/preload.json" }}
+{{- $devs := "_dev/model/base/preload.json" }}
+{{- $core := "_core/model/base/preload.json" }}
+{{- $vend := slice "tailwind" "bootstrap" "htmx" }}
+
+
+{{- if and ( eq .Site.Params.debug true ) ( eq .Site.Params.devel true ) -}}
+	{{- $json = $devs -}}
+{{- else if resources.Get $skin -}}
+	{{- $json = $skin -}}
+{{- else -}}
+	{{- $json = $core -}}
+{{- end -}}
+
+
+<head>
+	{{- partial "core/src/preload/native.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/preload/opengraph.html" ( dict "page" $page "site" $site ) -}}
+
+
+	{{- range $vend -}}
+		{{- $path := printf "core/src/vendor/%s/head.html" . -}}
+		{{- partial $path (dict "page" $page "site" $site  ) -}}	
+	{{- end -}}
+
+	
+	{{- with resources.Get $json -}}
+		{{- $data = . | transform.Unmarshal -}}
+		{{- range $keys, $rows := $data  -}}
+			{{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" $rows ) -}}
+		{{- end -}}
+	{{- end -}}
+
+	
+	{{- partial "core/src/preload/styles.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/preload/script.html" ( dict "page" $page "site" $site ) -}}
+
+
+	{{- partial "core/src/preload/jsonld.html" ( dict "page" $page "site" $site ) -}}
+</head>

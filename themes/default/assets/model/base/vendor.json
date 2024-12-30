@@ -1,0 +1,5 @@
+{
+    "tailwind"  : true,
+    "bootstrap" : false,
+    "htmx" : true
+}

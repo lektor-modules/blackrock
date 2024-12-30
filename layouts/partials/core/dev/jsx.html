@@ -1,0 +1,22 @@
+{{- with .data -}}
+    {{ if .value }}
+        {{- $src := partial "core/lib/rezget.html" ( dict "data" .value ) -}}
+        {{- $atr := .attribute -}}
+        {{- $ids := $atr.id -}}
+        {{- $inl := $atr.inline -}}
+        {{- $typ := $atr.mode -}}
+        {{- $loa := $atr.load -}}
+        {{- $asc := $atr.asyncs -}}
+        {{- $def := $atr.defer -}}
+        {{- $crs := $atr.crossorigin -}}
+        {{- $ref := $atr.referrerpolicy -}}
+        {{- if eq $inl true -}}
+            {{- with $src | minify -}}
+                {{- $src = .Content | safeJS -}}
+            {{- end -}}
+            <script type="text/javascript" {{ with $ids }}id="{{- . -}}" {{- end -}} {{- with $crs }} crossorigin="{{- . -}}" {{- end -}} {{- with $ref }} referrerpolicy="{{- .  -}}" {{- end -}} {{- with $asc }} async="{{ . }}" {{- end -}} {{- with $def }} defer="{{ . }}" {{- end -}} >{{ $src }}</script>
+        {{- else -}}
+            <script type="text/javascript" {{ with $ids }}id="{{- . -}}" {{- end -}} {{- with $src -}} src="{{- . -}}" {{- end -}} {{- with $crs }} crossorigin="{{- . -}}" {{- end -}} {{- with $ref }} referrerpolicy="{{- .  -}}" {{- end -}} {{- with $asc }} async="{{ . }}" {{- end -}} {{- with $def }} defer="{{ . }}" {{- end -}} ></script>
+        {{- end -}}
+    {{ end }}
+{{- end -}}

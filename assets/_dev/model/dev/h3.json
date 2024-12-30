@@ -1,0 +1,20 @@
+{
+    "type" : "block",
+    "elem" : "h3",
+    "value" : "Heading 3",
+    "attribute" : {
+        "id"              : "heading-id-3",
+        "class"           : "heading-class-3",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    }
+}

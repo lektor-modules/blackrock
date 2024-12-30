@@ -1,0 +1,20 @@
+{
+    "type" : "block",
+    "elem" : "p",
+    "value" : "Paragraph",
+    "attribute" : {
+        "id"              : "paragraph-id-6",
+        "class"           : "paragraph-class-6",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    }
+}

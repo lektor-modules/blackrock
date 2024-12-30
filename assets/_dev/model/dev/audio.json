@@ -1,0 +1,28 @@
+{
+    "type" : "block",
+    "elem" : "audio",
+    "value" : {
+        "ogg"  : "_dev/media/audio/horse.ogg",
+        "wav"  : "",
+        "mp3"  : "_dev/media/audio/horse.mp3"
+    },
+    "attribute" : {
+        "id"       : "test-video",
+        "class"    : "test-video",
+        "height"   : "",
+        "width"    : "",
+        "autoplay" : false,
+        "control"  : true,
+        "loop"     : false,
+        "muted"    : false,
+        "preload"  : false
+    },
+    "tracks" : [
+        {
+            "src" : "core/sample/video/friday.vtt",
+            "kind" : "subtitles",
+            "label" : "English",
+            "srclang" : "en"
+        }
+    ]
+}

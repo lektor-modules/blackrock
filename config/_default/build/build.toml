@@ -1,0 +1,5 @@
+[buildStats]
+    enable = true
+[[cachebusters]]
+    source = "config/vendor/tailwind/(postcss|tailwind)\\.config\\.js"
+    target = "css"

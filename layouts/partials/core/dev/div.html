@@ -1,0 +1,6 @@
+{{- $page := .page -}}
+{{- $site := .site -}}
+<div class="{{ with .data.attribute.class }}{{ . }}{{ end }}"> 
+    {{- with .data.value  -}}{{- . -}}{{- end -}}
+    {{- partial "core/lib/subdir.html" (dict "page" $page "site" $site "data" .data.subchild ) -}}
+</div>

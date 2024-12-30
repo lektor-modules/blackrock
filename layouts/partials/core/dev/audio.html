@@ -1,0 +1,41 @@
+{{ with .data }}
+    {{- if .value -}}
+
+        {{- $mp3 := partial "core/lib/rezget.html" ( dict "data" .value.mp3  ) -}}
+        {{- $wav := partial "core/lib/rezget.html" ( dict "data" .value.wav  ) -}}
+        {{- $ogg := partial "core/lib/rezget.html" ( dict "data" .value.ogg  ) -}}
+        {{- $atr := .attribute -}}
+        {{- $sub := .tracks -}}
+        {{- $ids := $atr.id -}}
+        {{- $cls := $atr.class -}}
+        {{- $hgt := $atr.height -}}
+        {{- $wdt := $atr.width -}}
+        {{- $atp := $atr.autoplay -}}
+        {{- $ctr := $atr.control -}}
+        {{- $lop := $atr.loop -}}
+        {{- $mut := $atr.muted -}}
+        {{- $pre := $atr.preload -}}
+
+        {{- if or ( $mp3 ) ( $wav ) ( $ogg ) -}}
+        <audio {{ with $ids -}} id="{{- . -}}" {{- end -}} {{- with $cls }} class="{{- . -}}"{{- end -}} {{- with $wdt }} width="{{- . -}}" {{- end -}}  {{- with $hgt }} height="{{- . -}}" {{- end -}} {{- with $ctr }} controls="{{- . -}}" {{- end -}} {{- with $atp }} autoplay="{{- . -}}" {{- end -}} {{- with $lop }} loop="{{- . -}}" {{- end -}} {{- with $mut }} muted="{{- . -}}" {{- end -}} {{- with $pre }} preload="{{- . -}}" {{- end -}}>
+            {{- with $mp3  -}}
+                <source src="{{ .RelPermalink }}" type="audio/mpeg">
+            {{- end -}}
+            {{- with $ogg  -}}
+                <source src="{{ .RelPermalink }}" type="audio/ogg">
+            {{- end -}}
+            {{- with $wav  -}}
+                <source src="{{ .RelPermalink }}" type="audio/wav">
+            {{- end -}}
+            {{- with $sub -}}
+                {{- range $sub -}}
+                    {{- if .src  -}}
+                    <track src="{{- .src -}}" kind="{{- .kind -}}" srclang="{{- .srclang -}}" label="{{- .label -}}">
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+            {{- printf "Your browser does not support the audio element." -}}
+        </audio> 
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

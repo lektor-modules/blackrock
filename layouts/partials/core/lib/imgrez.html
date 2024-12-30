@@ -1,0 +1,46 @@
+{{- $get := partial "core/lib/rezget.html" ( dict "data" .src  ) }}
+{{- $val := $get.Process "webp"  -}}
+
+{{- if eq .size "xxl" -}}
+    {{- if ge $val.Width 1536 -}}
+        {{- $croping := $val.Process "resize 1536x" -}}
+        <source media="(min-width:1536px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:1536px)" srcset="{{ $val.RelPermalink }}">
+    {{- end -}}
+{{- else if eq .size "xl" -}}
+    {{- if ge $val.Width 1280 -}}
+        {{- $croping := $val.Process "resize 1280x" -}}
+        <source media="(min-width:1280px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:1280px)" srcset="{{ $val.RelPermalink }}">
+    {{- end -}}
+{{- else if eq .size "lg" -}}
+    {{- if ge $val.Width 1024 -}}
+        {{- $croping := $val.Process "resize 1024x" -}}
+        <source media="(min-width:1024px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:1024px)" srcset="{{ $val.RelPermalink }}">
+    {{- end -}}
+{{- else if eq .size "md" -}}
+    {{- if ge $val.Width 768 -}}
+        {{- $croping := $val.Process "resize 768x" -}}
+        <source media="(min-width:768px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:768px)" srcset="{{ $val.RelPermalink }}">
+    {{- end -}}
+{{- else if eq .size "sm" -}}
+    {{- if ge $val.Width 640 -}}
+        {{- $croping := $val.Process "resize 640x" -}}
+        <source media="(min-width:640px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:640px)" srcset="{{ $val.RelPermalink }}">
+    {{- end -}}
+{{- else if eq .size "xs" -}}
+    {{- if ge $val.Width 480 -}}
+        {{- $croping := $val.Process "resize 480x" -}}
+        <source media="(min-width:480px)" srcset="{{ $croping.RelPermalink }}"><source media="(max-width:480px)" srcset="{{ $croping.RelPermalink }}">
+    {{- else -}}
+        <source media="(min-width:480px)" srcset="{{ $val.RelPermalink }}"><source media="(max-width:480px)" srcset="{{ $val.RelPermalink }}">
+    {{- end }}
+{{- end }}

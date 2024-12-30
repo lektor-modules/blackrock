@@ -1,0 +1,6 @@
+{{- $path := "" -}}
+{{- $site := .site -}}
+{{- $page := .page -}}
+
+{{- $path = printf "core/src/%s/%s.html" .data.scope .data.elem }}
+{{- partial $path (dict "page" $page "site" $site "data" .data ) -}}

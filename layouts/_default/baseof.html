@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}" class="{{ .Site.Params.theme }}" data-darkmode="">
+{{- partial "core/bin/preload.html" . -}}
+<body>
+	{{- partial "core/bin/loader.html"   . -}}
+	{{- partial "core/bin/header.html"   . -}}
+	{{- partial "core/bin/content.html"  . -}}
+	{{- partial "core/bin/footer.html"   . -}}
+	{{- partial "core/bin/postload.html" . -}}
+</body></html>

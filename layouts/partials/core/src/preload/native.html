@@ -1,0 +1,47 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+{{- if .page.Title -}}
+    <meta name="title" content="{{- with .page.Title -}}{{- . -}}{{- end -}}">
+{{- else if .site.Tile -}}
+    <meta name="title" content="{{- with .site.Title -}}{{- . -}}{{- end -}}">
+{{- end -}}
+
+
+{{- if .page.Params.description -}}
+    <meta name="description" content="{{- with .page.Params.description -}}{{- . -}}{{- end -}}">
+{{- else if .site.Params.description -}}
+    <meta name="description" content="{{- with .site.Params.description -}}{{- . -}}{{- end -}}">
+{{- end -}}
+
+
+{{- if .page.Params.keywords -}}
+    <meta name="keywords" content="{{- with .site.Params.keywords -}}{{- . -}}{{- end -}}">
+{{- else if .site.Params.description -}}
+    <meta name="keywords" content="{{- with .site.Params.keywords -}}{{- . -}}{{- end -}}">
+{{-  end -}}
+
+
+{{- if .page.Params.robots -}}
+    <meta name="robots" content="{{- with .site.Params.robots -}}{{- . -}}{{- end -}}">
+{{- else if .site.Params.robots -}}
+    <meta name="robots" content="{{- with .site.Params.robots -}}{{- . -}}{{- end -}}">
+{{-  end -}}
+
+
+{{- if  site.Language.LanguageCode  -}}
+    <meta name="language" content="{{- with  site.Language.LanguageCode  -}}{{- . -}}{{- end -}}">
+{{-  end -}}
+
+
+{{- if .page.Params.revisit -}}
+    <meta name="revisit-after" content="{{- with .site.Params.revisit -}}{{- . -}}{{- end -}}">
+{{- else if .site.Params.robots -}}
+    <meta name="revisit-after" content="{{- with .site.Params.revisit -}}{{- . -}}{{- end -}}">
+{{-  end -}}
+
+
+{{- if .page.Params.author -}}
+    <meta name="author" content="{{- with .site.Params.author -}}{{- . -}}{{- end -}}">
+{{- else if .site.Params.robots -}}
+    <meta name="author" content="{{- with .site.Params.author -}}{{- . -}}{{- end -}}">
+{{-  end -}}

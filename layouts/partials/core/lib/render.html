@@ -1,0 +1,9 @@
+{{- if eq .data.type "block" -}}
+    {{- partial "core/lib/block.html" (dict "page" .page "site" .site "data" .data  ) -}}
+{{- else if eq .data.type "proto" -}}
+    {{- partial "core/lib/proto.html" (dict "page" .page "site" .site "data" .data  ) -}}
+{{- else if eq hugo.Environment "development" -}}
+    Error  : {{ .data.type }} element type not exist<br>
+    Detail :<br> 
+    <code>{{ .data }}</code> 
+{{- end -}}

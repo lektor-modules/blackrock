@@ -1,0 +1,23 @@
+{
+    "type"  : "block",
+    "elem"  : "img",
+    "value" : "_dev/media/images/large.jpg",
+    "attribute" : {
+        "id"      : "",
+        "class"   : "logo",
+        "alt"     : "logo image",
+        "lazy"    : false,
+        "replace" : "",
+        "width"   : "",
+        "height"  : ""
+    },
+    "source" : {
+        "xs"  : "_dev/media//images/small.jpg",
+        "sm"  : "_dev/media//images/small.jpg",
+        "md"  : "_dev/media//images/large.jpg",
+        "lg"  : "_dev/media//images/large.jpg",
+        "xl"  : "_dev/media//images/large.jpg",
+        "xxl" : "_dev/media//images/large.jpg"
+    },
+    "caption" : "Al Muhdil Karim"
+}

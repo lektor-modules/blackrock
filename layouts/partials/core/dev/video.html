@@ -1,0 +1,42 @@
+{{- with .data -}}
+    {{- if .value -}}
+        {{- $mp4 := partial "core/lib/rezget.html" ( dict "data" .value.mp4  )  -}}
+        {{- $wbm := partial "core/lib/rezget.html" ( dict "data" .value.webm )  -}}
+        {{- $ogg := partial "core/lib/rezget.html" ( dict "data" .value.ogg  )  -}}
+        {{- $atr := .attribute -}}
+        {{- $sub := .tracks -}}
+        {{- $ids := $atr.id -}}
+        {{- $cls := $atr.class -}}
+        {{- $pos := $atr.poster -}}
+        {{- $hgt := $atr.height -}}
+        {{- $wdt := $atr.width -}}
+        {{- $atp := $atr.autoplay -}}
+        {{- $ctr := $atr.control -}}
+        {{- $lop := $atr.loop -}}
+        {{- $mut := $atr.muted -}}
+        {{- $pre := $atr.preload -}}
+        
+        {{- if or ( $mp4 ) ( $wbm ) ( $ogg ) -}}
+            <video {{ with $ids -}} id="{{- . -}}" {{- end -}} {{- with $cls }} class="{{- . -}}"{{- end -}} {{- with $pos }} poster="{{- . -}}" {{- end -}} {{- with $wdt }} width="{{- . -}}" {{- end -}}  {{- with $hgt }} height="{{- . -}}" {{- end -}} {{- with $ctr }} controls="{{- . -}}" {{- end -}} {{- with $atp }} autoplay="{{- . -}}" {{- end -}} {{- with $lop }} loop="{{- . -}}" {{- end -}} {{- with $mut }} muted="{{- . -}}" {{- end -}} {{- with $pre }} preload="{{- . -}}" {{- end -}}>
+                {{- with $mp4 -}}
+                    <source src="{{ .RelPermalink }}" type="video/mp4">
+                {{- end -}}
+                {{- with $wbm -}}
+                    <source src="{{ .RelPermalink }}" type="video/webm">
+                {{- end -}}
+                {{- with $ogg -}}
+                    <source src="{{ .RelPermalink }}" type="video/ogg">
+                {{- end -}}
+                {{- with $sub -}}
+                    {{- range $sub -}}
+                        {{- if .src  -}}
+                            {{- $sub := partial "core/lib/rezget.html" ( dict "data" .src   )  -}}
+                            <track src="{{- $sub.RelPermalink -}}" kind="{{- .kind -}}" srclang="{{- .srclang -}}" label="{{- .label -}}">
+                        {{- end -}}
+                    {{- end -}}
+                {{- end -}}
+            </video>
+        {{- end -}}
+
+    {{- end -}}
+{{- end -}}

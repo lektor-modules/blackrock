@@ -1,0 +1,21 @@
+
+{
+    "type" : "block",
+    "elem" : "div",
+    "attribute" : {
+        "id"              : "div-id",
+        "class"           : "div-class",
+        "draggable"       : false,
+        "popover"         : false,
+        "popovertarget"   : "",
+        "contenteditable" : false,
+        "style"           : "",
+        "data"            : [
+            {
+                "data-stye": "dark",
+                "data-popup": "close"
+            }
+        ]
+    },
+    "child" : []
+}

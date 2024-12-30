@@ -1,0 +1,29 @@
+{
+    "type" : "block",
+    "elem" : "video",
+    "value" : {
+        "mp4"  : "_dev/media/video/sample.mp4",
+        "webm" : "",
+        "ogg"  : "_dev/media/video/sample.ogg"
+    },
+   "attribute" : {
+        "id"       : "test-video",
+        "class"    : "test-video",
+        "poster"   : "",
+        "height"   : "",
+        "width"    : "",
+        "autoplay" : false,
+        "control"  : true,
+        "loop"     : false,
+        "muted"    : false,
+        "preload"  : false
+    },
+    "tracks" : [
+        {
+            "src" : "_dev/media/video/friday.vtt",
+            "kind" : "subtitles",
+            "label" : "English",
+            "srclang" : "en"
+        }
+    ]
+}

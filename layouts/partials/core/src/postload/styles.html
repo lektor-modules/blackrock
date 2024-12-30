@@ -1,0 +1,24 @@
+{{- $json := "" }}
+{{- $skin := "model/base/scripts.json" }}
+{{- $core := "_core/model/base/scripts.json" }}
+
+
+{{- if resources.Get $skin -}}
+	{{- $json = $skin -}}
+{{- else -}}
+	{{- $json = $core -}}
+{{- end -}}
+
+{{- with resources.Get $json -}}
+    {{- $gets := . | transform.Unmarshal -}}
+    {{- $ncss := $gets.css.defers }}
+    {{- $scss := $gets.scss.defers }}
+
+    {{ range $ncss }}
+        {{ . }}
+    {{ end }}
+
+    {{ range $scss }}
+    {{ end }}
+
+{{- end -}}

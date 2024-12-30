@@ -5,18 +5,18 @@
         "htmx" : false
     },
     "css" : {
-        "critical" :[],
-        "defers" :[]
+        "critical" :[ "main.css " ],
+        "defers" :[ "main.css ", "side.css"  ]
     },
     "scss" : {
-        "critical" :[],
-        "defers" :[]
+        "critical" :[ "head.scss" ],
+        "defers" :[ "foot.scss" ]
     },
     "jsm" : {
-        "defers" :[]
+        "defers" :[ "main.js", "side.js" ]
     },
     "jsx" : {
-        "critical" :[],
-        "defers" :[]
+        "critical" :[ "main.js" ],
+        "defers" :[ "main.js", "side.js" ]
     }
 }

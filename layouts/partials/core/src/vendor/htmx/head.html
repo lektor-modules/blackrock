@@ -1,6 +1,6 @@
 {{- $json := "" }}
-{{- $skin := "model/base/vendor.json" }}
-{{- $core := "_core/model/base/vendor.json" }}
+{{- $skin := "model/base/scripts.json" }}
+{{- $core := "_core/model/base/scripts.json" }}
 
 
 {{- if resources.Get $skin -}}
@@ -13,11 +13,11 @@
 {{- with resources.Get $json -}}
 	{{- $conf := . | transform.Unmarshal -}}
 	{{- with resources.Get "vend/htmx/main.min.js" }}
-		{{- if and ( eq hugo.IsDevelopment true ) ( eq $conf.htmx true  )  }}
+		{{- if and ( eq hugo.IsDevelopment true ) ( eq $conf.ven.htmx true  )  }}
 			{{- with . | js.Build }}
 				<script src="{{ .RelPermalink }}"></script>
 			{{- end }}
-		{{- else if and ( eq hugo.IsProduction true ) ( eq $conf.htmx true  ) }}
+		{{- else if and ( eq hugo.IsProduction true ) ( eq $conf.ven.htmx true  ) }}
 			{{- $opts := dict "minify" false }}
 			{{- with . | js.Build $opts | fingerprint }}
 			<script src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>

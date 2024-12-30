@@ -1,6 +1,6 @@
 {{- $json := "" }}
-{{- $skin := "model/base/vendor.json" }}
-{{- $core := "_core/model/base/vendor.json" }}
+{{- $skin := "model/base/scripts.json" }}
+{{- $core := "_core/model/base/scripts.json" }}
 {{- $path := printf "static/script/css/tailwind.css" -}}
 
 
@@ -13,7 +13,7 @@
 
 {{- with resources.Get $json -}}
 	{{- $conf := . | transform.Unmarshal -}}
-	{{- if and ( eq hugo.IsProduction true ) ( eq $conf.tailwind true  ) -}}
+	{{- if and ( eq hugo.IsProduction true ) ( eq $conf.ven.tailwind true  ) -}}
 		{{- with resources.Get $path -}}
 			{{- $opts := dict "minify" true -}}
 			{{- with . | fingerprint -}}

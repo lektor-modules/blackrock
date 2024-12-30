@@ -1,8 +1,8 @@
 {
     "ven" : {
-        "tailwind"  : false,
+        "tailwind"  : true,
         "bootstrap" : false,
-        "htmx" : false
+        "htmx" : true
     },
     "css" : {
 

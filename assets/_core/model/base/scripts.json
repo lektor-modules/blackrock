@@ -5,15 +5,18 @@
         "htmx" : true
     },
     "css" : {
-
+        "critical" :[],
+        "defers" :[]
     },
     "scss" : {
-
+        "critical" :[],
+        "defers" :[]
     },
     "jsm" : {
-
+        "defers" :[]
     },
     "jsx" : {
-
+        "critical" :[],
+        "defers" :[]
     }
 }

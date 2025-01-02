@@ -4,6 +4,7 @@
 {{- $rpath := "" }}
 {{- $site := .site }}
 
+
 {{- if resources.Get $skin -}}
     {{ $rskin := resources.Get $skin}}
     {{ $rcore := resources.Get $core }}
@@ -16,13 +17,13 @@
 {{- with resources.Get $rpath -}}
     {{- if eq hugo.Environment "development" }}
         {{- with . | js.Build }}
-            {{- $src :=  .Content | safeJS }}
+            {{- $src := .Content | safeJS }}
             <script id="{{ $site.Params.theme }}-script-critical">{{ $src }}</script>
         {{- end }}
     {{- else }}
         {{- $opts := dict "minify" true }}
         {{- with . | js.Build $opts | fingerprint }}
-            {{- $src :=  .Content | safeJS }}
+            {{- $src := .Content | safeJS }}
             <script id="{{ $site.Params.theme }}-script-critical" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
         {{- end }}
     {{- end }}

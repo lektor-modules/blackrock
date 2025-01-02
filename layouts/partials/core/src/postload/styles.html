@@ -1,24 +1,17 @@
-{{- $json := "" }}
-{{- $skin := printf "model/script/css-foot.css" }}
-{{- $core := printf "_core/script/css-foot.css" }}
-{{- $rpath := "" }}
-{{- $site := .site }}
-
-{{- if resources.Get $skin -}}
-    {{ $rskin := resources.Get $skin }}
-    {{ $rcore := resources.Get $core }}
-    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/critical.css" }}
-{{- else -}}
-    {{ $rpath = resources.Get $core }}
-{{- end -}}
+{{ $site := .site }}
+{{ $theme := resources.Match "model/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-theme.css" }}
+{{ $based := resources.Match "_core/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-based.css" }}
 
 
-{{- with resources.Get $rpath -}}
-    {{- if eq hugo.Environment "development" }}
-        <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"> 
-    {{ else }}
-        {{- with . | minify | fingerprint }}
-            <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-        {{- end }}
+{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/main.css" }}
+
+
+{{- if eq hugo.Environment "development" }}
+    {{- with $bundle | fingerprint }}
+        <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
     {{ end }}
-{{- end -}}
+{{ else }}
+    {{- with $bundle | minify | fingerprint }}
+        <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+{{ end }}

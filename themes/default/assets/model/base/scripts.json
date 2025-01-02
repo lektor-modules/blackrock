@@ -4,21 +4,5 @@
         "tailwind"  : false,
         "bootstrap" : false,
         "htmx" : false
-    },
-    "css" : {
-        "critical" :"head.css ",
-        "defers" : "foot.css "
-    },
-    "scss" : {
-        "critical" :"",
-        "defers" : "main.scss"
-    },
-    "jsm" : {
-        "critical" :"",
-        "defers" : "main.js"
-    },
-    "jsx" : {
-        "critical" :"head.js",
-        "defers" : "foot.js"
     }
 }

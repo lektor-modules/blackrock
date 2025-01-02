@@ -1,29 +1,19 @@
-{{- $json := "" }}
-{{- $skin := printf "model/script/jsm-head.js" }}
-{{- $core := printf "_core/script/jsm-head.js" }}
-{{- $rpath := "" }}
-{{- $site := .site }}
-
-{{- if resources.Get $skin -}}
-    {{ $rskin := resources.Get $skin}}
-    {{ $rcore := resources.Get $core }}
-    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/jsm-head.js" }}
-{{- else -}}
-    {{ $rpath = resources.Get $core }}
-{{- end -}}
+{{ $site := .site }}
+{{ $theme := resources.Match "model/script/module/critical/**.js" | resources.Concat "_tmp/scripts/head-module-theme-critical.js" }}
+{{ $based := resources.Match "_core/script/module/critical/**.js" | resources.Concat "_tmp/scripts/head-module-based-critical.js" }}
 
 
-{{- with resources.Get $rpath -}}
-    {{- if eq hugo.Environment "development" }}
-        {{- with . | js.Build }}
-            {{ $src := .Content | safeJS }}
-            <script id="{{ $site.Params.theme }}-module-critical" type="module">{{ $src }}</script>
-        {{- end }}
-    {{- else }}
-        {{- $opts := dict "minify" true }}
-        {{- with . | js.Build $opts | fingerprint }}
-            {{ $src := .Content | safeJS }}
-            <script id="{{ $site.Params.theme }}-module-defer" type="module" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
-        {{- end }}
+{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/head-module.js" }}
+
+{{- if eq hugo.Environment "development" }}
+    {{- with $bundle | js.Build }}
+        {{- $src := .Content | safeJS }}
+        <script id="{{ $site.Params.theme }}-module-critical" type="module" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
     {{- end }}
-{{- end -}}
+{{ else }}
+    {{- $opts := dict "minify" true }}
+    {{- with $bundle | js.Build $opts | fingerprint }}
+        {{- $src := .Content | safeJS }}
+        <script id="{{ $site.Params.theme }}-module-critical" type="module" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
+    {{- end }}
+{{ end }}

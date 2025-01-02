@@ -1,0 +1,1 @@
+console.log("jsm-theme-foot-loaded")

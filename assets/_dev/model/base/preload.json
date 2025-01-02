@@ -1,12 +1,3 @@
 [
-    {
-        "type"  : "block",
-        "elem"  : "jsm",
-        "value" : "devel"
-    },
-    {
-        "type" : "block",
-        "elem"  : "jsx",
-        "value" : "devel"
-    }
+    
 ]

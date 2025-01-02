@@ -1,0 +1,11 @@
+{
+    "style" : {
+        "tailwind"  : false,
+        "bootstrap" : false
+    },
+    "script" : {
+        "animax" : true,
+        "htmx"   : false
+    },
+    "icons" : {}
+}

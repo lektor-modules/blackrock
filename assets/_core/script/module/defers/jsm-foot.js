@@ -1,0 +1,1 @@
+console.log("jsm-core-foot-loaded")

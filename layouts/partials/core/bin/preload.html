@@ -27,17 +27,18 @@
 		{{- partial $path (dict "page" $page "site" $site  ) -}}	
 	{{- end -}}
 
+
+	{{- partial "core/src/preload/styles.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/preload/module.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/preload/script.html" ( dict "page" $page "site" $site ) -}}
 	
+
 	{{- with resources.Get $json -}}
 		{{- $data = . | transform.Unmarshal -}}
 		{{- range $keys, $rows := $data  -}}
 			{{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" $rows ) -}}
 		{{- end -}}
 	{{- end -}}
-
-	
-	{{- partial "core/src/preload/styles.html" ( dict "page" $page "site" $site ) -}}
-	{{- partial "core/src/preload/script.html" ( dict "page" $page "site" $site ) -}}
 
 
 	{{- partial "core/src/preload/jsonld.html" ( dict "page" $page "site" $site ) -}}

@@ -1,27 +1,17 @@
-{{- $json := "" }}
-{{- $skin := printf "model/script/jsm-foot.js" }}
-{{- $core := printf "_core/script/jsm-foot.js" }}
-{{- $rpath := "" }}
-{{- $site := .site }}
-
-{{- if resources.Get $skin -}}
-    {{ $rskin := resources.Get $skin}}
-    {{ $rcore := resources.Get $core }}
-    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/module.js" }}
-{{- else -}}
-    {{ $rpath = resources.Get $core }}
-{{- end -}}
+{{ $site := .site }}
+{{ $theme := resources.Match "model/script/module/defers/**.js" | resources.Concat "_tmp/scripts/foot-module-theme.js" }}
+{{ $based := resources.Match "_core/script/module/defers/**.js" | resources.Concat "_tmp/scripts/foot-module-based.js" }}
 
 
-{{- with resources.Get $rpath -}}
-    {{- if eq hugo.Environment "development" }}
-        {{- with . | js.Build }}
-            <script id="{{ $site.Params.theme }}-module-defer" type="module" src="{{ .RelPermalink }}"></script>
-        {{- end }}
-    {{- else }}
-        {{- $opts := dict "minify" true }}
-        {{- with . | js.Build $opts | fingerprint }}
-            <script id="{{ $site.Params.theme }}-module-defer" type="module" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
-        {{- end }}
+{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/foot-module.js" }}
+
+{{- if eq hugo.Environment "development" }}
+    {{- with $bundle | js.Build | fingerprint }}
+        <script id="{{ $site.Params.theme }}-module-critical" type="module" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
     {{- end }}
-{{- end -}}
+{{ else }}
+    {{- $opts := dict "minify" true }}
+    {{- with $bundle | js.Build $opts | fingerprint }}
+        <script id="{{ $site.Params.theme }}-module-critical" type="module" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- end }}
+{{ end }}

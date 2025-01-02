@@ -1,8 +1,0 @@
-{
-    "ven" : {
-        "animax"    : true,
-        "tailwind"  : false,
-        "bootstrap" : false,
-        "htmx" : false
-    }
-}

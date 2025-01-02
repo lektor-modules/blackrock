@@ -98,5 +98,15 @@
             "class" : "title"
         },  
         "subchild" : []
+    },
+    {
+        "type"  : "block",
+        "elem"  : "animax",
+        "value" : "devel",
+        "attribute" : {
+            "id"    : "title",
+            "class" : "title"
+        },  
+        "subchild" : []
     }
 ]

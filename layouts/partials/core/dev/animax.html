@@ -1,0 +1,42 @@
+{{ with .data }}
+    {{- if .value -}}
+        {{- $val := .value -}}
+        {{- $atr := .attribute -}}
+        {{- $ids := $atr.id -}}
+        {{- $cls := $atr.class -}}
+        {{- $bgs := $atr.bg -}}
+        {{- $atp := $atr.autoplay -}}
+        {{- $spd := $atr.speed -}}
+        {{- $ctr := $atr.control -}}
+        {{- $lop := $atr.loop -}}
+        {{- $mut := $atr.muted -}}
+        {{- $pre := $atr.preload -}}
+
+        {{- if and $val ( eq $pre false ) -}}
+            <animax-player 
+                {{ with $ids -}} id="{{- . -}}" {{- end -}} 
+                {{- with $cls }} class="{{- . -}}"{{- end -}} 
+                {{- with $val }} src="{{- . -}}"{{- end -}}
+                {{- with $spd }} speed="{{- . -}}" {{- end -}} 
+                {{- with $ctr }} controls="{{- . -}}" {{- end -}} 
+                {{- with $atp }} autoplay="{{- . -}}" {{- end -}} 
+                {{- with $lop }} loop="{{- . -}}" {{- end -}} 
+                {{- with $mut }} muted="{{- . -}}" {{- end -}} 
+                {{- with $pre }} preload="{{- . -}}" {{- end -}}>
+            </animax-player>
+        {{- else if eq $pre true -}}
+            <div 
+                {{ with $ids -}} id="{{- . -}}" {{- end -}} 
+                {{- with $cls }} class="animax {{ . -}}"{{- end -}} 
+                {{- with $val }} src="{{- . -}}"{{- end -}}
+                {{- with $spd }} speed="{{- . -}}" {{- end -}} 
+                {{- with $ctr }} controls="{{- . -}}" {{- end -}} 
+                {{- with $atp }} autoplay="{{- . -}}" {{- end -}} 
+                {{- with $lop }} loop="{{- . -}}" {{- end -}} 
+                {{- with $mut }} muted="{{- . -}}" {{- end -}} 
+                {{- with $pre }} preload="{{- . -}}" {{- end -}}>
+        </div>
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+

@@ -1,0 +1,29 @@
+{{- $json := "" }}
+{{- $skin := printf "model/script/jsm-head.js" }}
+{{- $core := printf "_core/script/jsm-head.js" }}
+{{- $rpath := "" }}
+{{- $site := .site }}
+
+{{- if resources.Get $skin -}}
+    {{ $rskin := resources.Get $skin}}
+    {{ $rcore := resources.Get $core }}
+    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/jsm-head.js" }}
+{{- else -}}
+    {{ $rpath = resources.Get $core }}
+{{- end -}}
+
+
+{{- with resources.Get $rpath -}}
+    {{- if eq hugo.Environment "development" }}
+        {{- with . | js.Build }}
+            {{ $src := .Content | safeJS }}
+            <script id="{{ $site.Params.theme }}-module-critical" type="module">{{ $src }}</script>
+        {{- end }}
+    {{- else }}
+        {{- $opts := dict "minify" true }}
+        {{- with . | js.Build $opts | fingerprint }}
+            {{ $src := .Content | safeJS }}
+            <script id="{{ $site.Params.theme }}-module-defer" type="module" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
+        {{- end }}
+    {{- end }}
+{{- end -}}

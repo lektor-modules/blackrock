@@ -1,28 +1,24 @@
 {{- $json := "" }}
-{{- $skin := "model/base/scripts.json" }}
-{{- $core := "_core/model/base/scripts.json" }}
-
+{{- $skin := printf "model/script/css-head.css" }}
+{{- $core := printf "_core/script/css-head.css" }}
+{{- $rpath := "" }}
+{{- $site := .site }}
 
 {{- if resources.Get $skin -}}
-	{{- $json = $skin -}}
+    {{ $rskin := resources.Get $skin}}
+    {{ $rcore := resources.Get $core }}
+    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/critical.css" }}
 {{- else -}}
-	{{- $json = $core -}}
+    {{ $rpath = resources.Get $core }}
 {{- end -}}
 
 
-{{- with resources.Get $json -}}
-    {{- $gets := . | transform.Unmarshal -}}
-    {{- $ncss := $gets.css.critical }}
-    {{- $scss := $gets.scss.critical }}
-
-    {{ range $ncss }}
-        {{ $path := printf "static/script/css/%s" . }}
-        {{ $path }}
+{{- with resources.Get $rpath -}}
+    {{- if eq hugo.Environment "development" }}
+        <link id="{{ $site.Params.theme }}-style-critical" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{ else }}
+        {{- with . | minify | fingerprint }}
+            <link id="{{ $site.Params.theme }}-style-critical" rel="stylesheet" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+        {{- end }}
     {{ end }}
-
-    {{ range $scss }}
-       {{ $path := printf "static/script/scss/%s" . }}
-       {{ $path }}
-    {{ end }}
-    
 {{- end -}}

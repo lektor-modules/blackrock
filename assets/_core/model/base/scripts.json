@@ -1,8 +1,9 @@
 {
     "ven" : {
-        "tailwind"  : true,
+        "animax"    : true,
         "bootstrap" : false,
-        "htmx" : true
+        "htmx" : true,
+        "tailwind"  : true        
     },
     "css" : {
         "critical" :[],

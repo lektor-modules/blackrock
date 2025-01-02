@@ -1,0 +1,23 @@
+{
+    "type" : "block",
+    "elem" : "animax",
+    "value" : "https://lottie.host/a4034fbd-87ad-496d-bcb1-7a79163df68e/YyFXpIW70j.lottie",
+    "attribute" : {
+        "id"       : "test-animax",
+        "class"    : "test-animax",
+        "speed"    : 1,
+        "bg"       : "transparent",
+        "autoplay" : true,
+        "control"  : false,
+        "loop"     : true,
+        "preload"  : false
+    },
+    "tracks" : [
+        {
+            "src" : "core/sample/video/friday.vtt",
+            "kind" : "subtitles",
+            "label" : "English",
+            "srclang" : "en"
+        }
+    ]
+}

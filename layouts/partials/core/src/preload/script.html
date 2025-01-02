@@ -1,21 +1,29 @@
 {{- $json := "" }}
-{{- $skin := "model/base/scripts.json" }}
-{{- $core := "_core/model/base/scripts.json" }}
-
+{{- $skin := printf "model/script/jsx-head.js" }}
+{{- $core := printf "_core/script/jsx-head.js" }}
+{{- $rpath := "" }}
+{{- $site := .site }}
 
 {{- if resources.Get $skin -}}
-	{{- $json = $skin -}}
+    {{ $rskin := resources.Get $skin}}
+    {{ $rcore := resources.Get $core }}
+    {{ $rpath = slice $rskin $rcore | resources.Concat "static/script/jsx-head.js" }}
 {{- else -}}
-	{{- $json = $core -}}
+    {{ $rpath = resources.Get $core }}
 {{- end -}}
 
 
-{{- with resources.Get $json -}}
-    {{- $get := . | transform.Unmarshal -}}
-    {{- $jsx := $get.jsx.critical }}
-
-    {{ range $jsx }}
-        {{ . }}
-    {{ end }}
-    
+{{- with resources.Get $rpath -}}
+    {{- if eq hugo.Environment "development" }}
+        {{- with . | js.Build }}
+            {{- $src :=  .Content | safeJS }}
+            <script id="{{ $site.Params.theme }}-script-critical">{{ $src }}</script>
+        {{- end }}
+    {{- else }}
+        {{- $opts := dict "minify" true }}
+        {{- with . | js.Build $opts | fingerprint }}
+            {{- $src :=  .Content | safeJS }}
+            <script id="{{ $site.Params.theme }}-script-critical" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
+        {{- end }}
+    {{- end }}
 {{- end -}}

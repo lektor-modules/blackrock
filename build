@@ -10,7 +10,7 @@ twstat=$(jq '.tailwind' themes/$themes/assets/model/base/vendor.json | sed -e 's
 
 
 if [[ $twstat -eq "true" ]];then
-    tailwindcss -c ./assets/vend/tailwind/tailwind.config.js -i ./assets/vend/tailwind/input.css  -o "./themes/$themes/assets/static/script/css/tailwind.css"
+    tailwindcss -c ./assets/vend/tailwind/tailwind.config.js -i ./assets/vend/tailwind/input.css  -o "./themes/$themes/assets/static/script/css/ven-tail.css"
 fi
 
 

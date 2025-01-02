@@ -1,22 +1,24 @@
 {
     "ven" : {
+        "animax"    : true,
         "tailwind"  : false,
         "bootstrap" : false,
         "htmx" : false
     },
     "css" : {
-        "critical" :[ "main.css " ],
-        "defers" :[ "main.css ", "side.css"  ]
+        "critical" :"head.css ",
+        "defers" : "foot.css "
     },
     "scss" : {
-        "critical" :[ "head.scss" ],
-        "defers" :[ "foot.scss" ]
+        "critical" :"",
+        "defers" : "main.scss"
     },
     "jsm" : {
-        "defers" :[ "main.js", "side.js" ]
+        "critical" :"",
+        "defers" : "main.js"
     },
     "jsx" : {
-        "critical" :[ "main.js" ],
-        "defers" :[ "main.js", "side.js" ]
+        "critical" :"head.js",
+        "defers" : "foot.js"
     }
 }

@@ -1,17 +1,89 @@
-{{ $site := .site }}
-{{ $theme := resources.Match "model/script/defers/**.js" | resources.Concat "_tmp/scripts/foot-theme.js" }}
-{{ $based := resources.Match "_core/script/defers/**.js" | resources.Concat "_tmp/scripts/foot-based.js" }}
+{{- $site := .site -}}
+{{- $devs := hugo.IsDevelopment -}}
+{{- $prod := hugo.IsProduction -}}
 
 
-{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/defers.js" }}
 
-{{- if eq hugo.Environment "development" }}
-    {{- with $bundle | js.Build | fingerprint }}
-        <script id="{{ $site.Params.theme }}-script-defer" type="text/javascript" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
-    {{- end }}
-{{ else }}
-    {{- $opts := dict "minify" true }}
-    {{- with $bundle | js.Build $opts | fingerprint }}
-        <script id="{{ $site.Params.theme }}-script-defer" type="text/javascript" src="{{ .RelPermalink }}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
-    {{- end }}
-{{ end }}
+<!-- MODULE : COMPILE -->
+{{- $theme_module := resources.Match "model/script/module/defers/**.js" | resources.Concat "_tmp/scripts/foot-module-theme.js" -}}
+{{- $based_module := resources.Match "_core/script/module/defers/**.js" | resources.Concat "_tmp/scripts/foot-module-based.js" -}}
+{{- $bundle_module := slice $based_module $theme_module | resources.Concat "static/scripts/module.js" -}}
+{{- if eq $devs true -}}
+    {{- with $bundle_module | js.Build -}}
+        <script id="{{- $site.Params.theme -}}-module" type="module" src="{{- .RelPermalink -}}" ></script>
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle_module | js.Build ( dict "minify" true ) | fingerprint }}
+        <script id="{{- $site.Params.theme -}}-module" type="module" src="{{- .RelPermalink -}}" integrity="{{- .Data.Integrity -}}" crossorigin="anonymous"></script>
+    {{- end -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : CONFIG -->
+{{- $vcon := "" -}}
+{{- if resources.Get "model/base/config.json" -}}
+	{{- $vcon = resources.Get "model/base/config.json" | transform.Unmarshal -}}
+{{- else -}}
+	{{- $vcon = resources.Get "_core/model/base/config.json" | transform.Unmarshal -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : ANIMAX -->
+{{- $vendor_animax := resources.Get "_core/script/vendor/blank/render.js" -}}
+{{- if eq $vcon.script.animax true -}}
+    {{- $vendor_animax = resources.Get "_core/script/vendor/animax/main.js" -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : HTMX -->
+{{- $vendor_htmx := resources.Get "_core/script/vendor/blank/render.js" -}}
+{{- if eq $vcon.script.htmx true -}}
+    {{- $vendor_htmx = resources.Get "_core/script/vendor/htmx/main.min.js" -}}
+{{- end -}}
+
+
+<!-- VENDOR : POPPER -->
+{{- $vendor_popper := resources.Get "_core/script/vendor/blank/render.js" -}}
+{{- if or ( eq $vcon.script.popper true ) ( and ( eq $vcon.style.tailwind false ) ( eq $vcon.style.bootsrap true ) ) -}}
+    {{- $vendor_popper = resources.GetRemote "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : BOOTSTRAP -->
+{{- $vendor_bootsrap := resources.Get "_core/script/vendor/blank/render.js" -}}
+{{- if and ( eq $vcon.style.tailwind false ) ( eq $vcon.style.bootsrap true ) -}}
+    {{- $vendor_bootsrap = resources.GetRemote "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" -}}
+{{- end -}}
+
+
+
+<!-- SCRIPT : RESOURCE -->
+{{- $theme_script := resources.Match "model/script/defers/**.js" | resources.Concat "_tmp/scripts/foot-theme.js" -}}
+{{- $based_script := resources.Match "_core/script/defers/**.js" | resources.Concat "_tmp/scripts/foot-based.js" -}}
+
+
+
+<!-- SCRIPT : COMPILE -->
+{{- $bundle_script := slice 
+    $vendor_animax 
+    $vendor_htmx 
+    $vendor_popper 
+    $vendor_bootsrap
+    $based_script 
+    $theme_script | resources.Concat "static/scripts/main.js" 
+-}}
+
+
+{{- if eq $devs true -}}
+    {{- with $bundle_script | js.Build ( dict "minify" false ) -}}
+        <script id="{{- $site.Params.theme -}}-script" type="text/javascript" src="{{- .RelPermalink -}}"></script>
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle_script | js.Build ( dict "minify" true ) | fingerprint -}}
+        <script id="{{- $site.Params.theme -}}-script" type="text/javascript" src="{{- .RelPermalink -}}" integrity="{{- .Data.Integrity }}" crossorigin="anonymous"></script>
+    {{- end -}}
+{{- end -}}

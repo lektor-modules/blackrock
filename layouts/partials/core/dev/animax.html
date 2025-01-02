@@ -13,8 +13,7 @@
         {{- $pre := $atr.preload -}}
 
         {{- if and $val ( eq $pre false ) -}}
-            <animax-player 
-                {{ with $ids -}} id="{{- . -}}" {{- end -}} 
+            <animax-player {{ with $ids -}} id="{{- . -}}" {{- end -}} 
                 {{- with $cls }} class="{{- . -}}"{{- end -}} 
                 {{- with $val }} src="{{- . -}}"{{- end -}}
                 {{- with $spd }} speed="{{- . -}}" {{- end -}} 
@@ -22,11 +21,9 @@
                 {{- with $atp }} autoplay="{{- . -}}" {{- end -}} 
                 {{- with $lop }} loop="{{- . -}}" {{- end -}} 
                 {{- with $mut }} muted="{{- . -}}" {{- end -}} 
-                {{- with $pre }} preload="{{- . -}}" {{- end -}}>
-            </animax-player>
+                {{- with $pre }} preload="{{- . -}}" {{- end -}}></animax-player>
         {{- else if eq $pre true -}}
-            <div 
-                {{ with $ids -}} id="{{- . -}}" {{- end -}} 
+            <div {{ with $ids -}} id="{{- . -}}" {{- end -}} 
                 {{- with $cls }} class="animax {{ . -}}"{{- end -}} 
                 {{- with $val }} src="{{- . -}}"{{- end -}}
                 {{- with $spd }} speed="{{- . -}}" {{- end -}} 

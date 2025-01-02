@@ -1,19 +1,52 @@
-{{ $site := .site }}
-{{ $theme := resources.Match "model/script/critical/**.js" | resources.Concat "_tmp/scripts/head-theme.js" }}
-{{ $based := resources.Match "_core/script/critical/**.js" | resources.Concat "_tmp/scripts/head-based.js" }}
+{{- $site := .site -}}
+{{- $devs := hugo.IsDevelopment -}}
+{{- $prod := hugo.IsProduction -}}
+{{- $vcon := "" -}}
 
 
-{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/critical.js" }}
+{{- if resources.Get "model/base/scripts.json" -}}
+	{{- $vcon = resources.Get "model/base/scripts.json" | transform.Unmarshal -}}
+{{- else -}}
+	{{- $vcon = resources.Get "_core/model/base/scripts.json" | transform.Unmarshal -}}
+{{- end -}}
 
-{{- if eq hugo.Environment "development" }}
-    {{- with $bundle | js.Build }}
-        {{- $src := .Content | safeJS }}
-        <script id="{{ $site.Params.theme }}-script-critical" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
-    {{- end }}
-{{ else }}
-    {{- $opts := dict "minify" true }}
-    {{- with $bundle | js.Build $opts | fingerprint }}
-        {{- $src := .Content | safeJS }}
-        <script id="{{ $site.Params.theme }}-script-critical" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
-    {{- end }}
-{{ end }}
+
+
+<!-- MODULE -->
+{{- $theme_module  := resources.Match "model/script/module/critical/**.js" | resources.Concat "_tmp/scripts/head-module-theme-critical.js" -}}
+{{- $based_module  := resources.Match "_core/script/module/critical/**.js" | resources.Concat "_tmp/scripts/head-module-based-critical.js" -}}
+{{- $bundle_module := slice $based_module $theme_module | resources.Concat "static/scripts/head-module.js" -}}
+{{- if eq $devs true -}}
+    {{- with $bundle_module | js.Build ( dict "minify" true ) -}}{{- $src := .Content | safeJS -}}
+        <script id="critical-jsm" type="module">{{ $src }}</script>
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle_module | js.Build (dict "minify" true) | fingerprint -}}{{- $src := .Content | safeJS -}}
+        <script id="critical-jsm" type="module" integrity="{{- .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</script>
+    {{- end -}}
+{{- end -}}
+
+
+
+<!-- SCRIPT : RESOURCE -->
+{{- $theme_script  := resources.Match "model/script/critical/**.js" | resources.Concat "_tmp/scripts/head-theme.js" -}}
+{{- $based_script  := resources.Match "_core/script/critical/**.js" | resources.Concat "_tmp/scripts/head-based.js" -}}
+
+
+
+<!-- SCRIPT : COMPILE -->
+{{- $bundle_script := slice 
+    $based_script 
+    $theme_script  | resources.Concat "static/scripts/critical.js" 
+-}}
+
+
+{{- if eq $devs true -}}
+    {{- with $bundle_script | js.Build ( dict "minify" true ) -}}{{- $src := .Content | safeJS -}}
+        <script id="critical-jsx" type="text/javascript">{{ $src }}</script>
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle_script | js.Build ( dict "minify" true ) | fingerprint -}}{{- $src := .Content | safeJS -}}
+        <script id="critical-jsx" type="text/javascript" integrity="{{- .Data.Integrity -}}" crossorigin="anonymous">{{ $src }}</script>
+    {{- end -}}
+{{- end -}}

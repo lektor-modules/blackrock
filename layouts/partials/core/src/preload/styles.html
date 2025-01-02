@@ -1,18 +1,48 @@
-{{ $site := .site }}
-{{ $theme := resources.Match "model/script/critical/**.css" | resources.Concat "_tmp/scripts/head-theme.css" }}
-{{ $based := resources.Match "_core/script/critical/**.css" | resources.Concat "_tmp/scripts/head-based.css" }}
+{{- $site := .site -}}
+{{- $devs := hugo.IsDevelopment -}}
+{{- $prod := hugo.IsProduction -}}
 
 
-{{ $bundle := slice $based $theme | resources.Concat "_tmp/scripts/critical.css" }}
 
-{{- if eq hugo.Environment "development" }}
-    {{- with $bundle | fingerprint }}
-        {{- $src := .Content | safeCSS }}
-        <style id="{{ $site.Params.theme }}-script-critical" rel="stylesheet" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</style>
-    {{ end }}
-{{ else }}
-    {{- with $bundle | minify | fingerprint }}
-        {{- $src := .Content | safeCSS }}
-        <style id="{{ $site.Params.theme }}-script-critical" rel="stylesheet" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</style>
-    {{- end }}
-{{ end }}
+<!-- VENDOR : CONFIG -->
+{{- $vcon := "" -}}
+{{- if resources.Get "model/base/config.json" -}}
+	{{- $vcon = resources.Get "model/base/config.json" | transform.Unmarshal -}}
+{{- else -}}
+	{{- $vcon = resources.Get "_core/model/base/config.json" | transform.Unmarshal -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : TAILWIND -->
+{{- if and ( eq $vcon.style.tailwind true ) ( eq $devs true ) -}}
+	<script src="https://cdn.tailwindcss.com"></script>
+{{- end -}}
+
+
+
+<!-- STYLE : RESOURCE -->
+{{- $theme_sytle := resources.Match "model/script/critical/**.css" | resources.Concat "_tmp/scripts/head-theme.css" -}}
+{{- $based_style := resources.Match "_core/script/critical/**.css" | resources.Concat "_tmp/scripts/head-based.css" -}}
+{{- $theme_sass  := resources.Get "model/script/critical/main.scss" | toCSS (dict "transpiler" "libsass" "targetPath" "_tmp/scripts/sass-head-theme.css" ) -}}
+{{- $based_sass  := resources.Get "_core/script/critical/main.scss" | toCSS (dict "transpiler" "libsass" "targetPath" "_tmp/scripts/sass-head-based.css" ) -}}
+
+
+<!-- STYLE : COMPILE -->
+{{- $bundle := slice
+    $based_sass
+    $based_style 
+    $theme_sass 
+    $theme_sytle | resources.Concat "_tmp/scripts/critical.css" 
+-}}
+
+
+{{- if eq $devs true -}}
+    {{- with $bundle | minify }}{{- $src := .Content | safeCSS -}}
+        <style id="critical-css" rel="stylesheet" >{{ $src }}</style>
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle | minify | fingerprint }}{{- $src := .Content | safeCSS -}}
+        <style id="critical-css" rel="stylesheet" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">{{ $src }}</style>
+    {{- end -}}
+{{- end -}}

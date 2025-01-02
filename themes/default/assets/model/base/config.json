@@ -1,0 +1,13 @@
+{
+    "theme" : "default",
+    "style" : {
+        "tailwind"  : false,
+        "bootstrap" : false
+    },
+    "script" : {
+        "animax" : false,
+        "popper" : false,
+        "htmx"   : false
+    },
+    "icons" : {}
+}

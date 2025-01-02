@@ -1,17 +1,57 @@
-{{ $site := .site }}
-{{ $theme := resources.Match "model/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-theme.css" }}
-{{ $based := resources.Match "_core/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-based.css" }}
+{{- $site := .site -}}
+{{- $devs := hugo.IsDevelopment -}}
+{{- $prod := hugo.IsProduction -}}
+{{- $vcon := "" -}}
 
 
-{{ $bundle := slice $based $theme  | resources.Concat "static/scripts/main.css" }}
+<!-- VENDOR : CONFIG -->
+{{- if resources.Get "model/base/config.json" -}}
+	{{- $vcon = resources.Get "model/base/config.json" | transform.Unmarshal -}}
+{{- else -}}
+	{{- $vcon = resources.Get "_core/model/base/config.json" | transform.Unmarshal -}}
+{{- end -}}
 
 
-{{- if eq hugo.Environment "development" }}
-    {{- with $bundle | fingerprint }}
-        <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{ end }}
-{{ else }}
-    {{- with $bundle | minify | fingerprint }}
-        <link id="{{ $site.Params.theme }}-style-defer" rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
-{{ end }}
+<!-- VENDOR : TAILWIND -->
+{{- $vendor_tailwind := resources.Get "_core/script/vendor/blank/render.css" -}}
+{{- if and ( eq $vcon.style.tailwind true ) ( eq $prod true ) -}}
+    {{- $vendor_tailwind = resources.Get "_core/script/vendor/tailwind/output.css" -}}
+{{- end -}}
+
+
+
+<!-- VENDOR : BOOTSTRAP -->
+{{- $vendor_bootsrap := resources.Get "_core/script/vendor/blank/render.css" -}}
+{{- if and ( eq $vcon.style.tailwind false ) ( eq $vcon.style.bootstrap true ) -}}
+    {{ $vendor_bootsrap = resources.GetRemote "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" -}}
+{{- end -}}
+
+
+
+<!-- STYLE : RESOURCE -->
+{{- $theme_style := resources.Match "model/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-theme.css" -}}
+{{- $based_style := resources.Match "_core/script/defers/**.css" | resources.Concat "_tmp/scripts/foot-based.css" -}}
+{{- $theme_sass  := resources.Get "model/script/defers/main.scss" | toCSS (dict "transpiler" "libsass" "targetPath" "_tmp/scripts/sass-foot-theme.css" ) -}}
+{{- $based_sass  := resources.Get "_core/script/defers/main.scss" | toCSS (dict "transpiler" "libsass" "targetPath" "_tmp/scripts/sass-foot-based.css" ) -}}
+
+
+<!-- STYLE : COMPILE -->
+{{- $bundle := slice
+    $vendor_tailwind
+    $vendor_bootsrap
+    $based_sass
+    $based_style
+    $theme_sass 
+    $theme_style | resources.Concat "static/scripts/main.css" 
+-}}
+
+
+{{- if eq $devs true -}}
+    {{- with $bundle | fingerprint -}}
+        <link id="{{- $site.Params.theme -}}-style" rel="stylesheet" href="{{- .RelPermalink -}}" >
+    {{- end -}}
+{{- else -}}
+    {{- with $bundle | minify | fingerprint -}}
+        <link id="{{- $site.Params.theme -}}-style" rel="stylesheet" href="{{- .RelPermalink -}}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end -}}
+{{- end -}}

@@ -2,34 +2,22 @@
 {{- $json := "" -}}
 {{- $data := dict -}}
 {{- $site := .Site -}}
-{{- $skin := "model/base/postload.json" -}}
-{{- $devs := "_dev/model/base/postload.json" -}}
-{{- $core := "_core/model/base/postload.json" -}}
-{{- $vend := slice "tailwind" "bootstrap" "htmx" "animax" -}}
 
 
 {{- if and ( eq .Site.Params.debug true ) ( eq .Site.Params.devel true ) -}}
-	{{- $json = $devs -}}
-{{- else if resources.Get $skin -}}
-	{{- $json = $skin -}}
+	{{- $json = "_dev/model/base/postload.json" -}}
+{{- else if resources.Get "model/base/postload.json" -}}
+	{{- $json = "model/base/postload.json" -}}
 {{- else -}}
-	{{- $json = $core -}}
-{{- end -}}
-
-
-{{- range $vend  -}}
-	{{- $path := printf "core/src/vendor/%s/foot.html" . -}}
-	{{- partial $path (dict "page" $page "site" $site  ) -}}	
+	{{- $json = "_core/model/base/postload.json" -}}
 {{- end -}}
 
 
 {{- partial "core/src/postload/styles.html" ( dict "page" $page "site" $site ) -}}
-{{- partial "core/src/postload/module.html" ( dict "page" $page "site" $site ) -}}
 {{- partial "core/src/postload/script.html" ( dict "page" $page "site" $site ) -}}
 
 
-{{- with resources.Get $json -}}
-	{{- $data = . | transform.Unmarshal -}}
+{{- with resources.Get $json | transform.Unmarshal -}}
 	{{- range $keys, $rows := $data  -}}
 		{{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" $rows ) -}}
 	{{- end -}}

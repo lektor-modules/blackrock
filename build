@@ -6,12 +6,15 @@ fi
 
 
 themes=$(jq '.theme' config/_default/params.json | sed -e 's/^"//' -e 's/"$//' )
-twstat=$(jq '.tailwind' themes/$themes/assets/model/base/vendor.json | sed -e 's/^"//' -e 's/"$//' )
-
+twstat=$(jq '.tailwind' themes/$themes/assets/model/base/config.json | sed -e 's/^"//' -e 's/"$//' )
+tailpt=./assets/_core/script/vendor/tailwind
 
 if [[ $twstat -eq "true" ]];then
-    tailwindcss -c ./assets/vend/tailwind/tailwind.config.js -i ./assets/vend/tailwind/input.css  -o "./themes/$themes/assets/static/script/css/ven-tail.css"
+    
+    tailwindcss -c $tailpt/tailwind.config.js -i $tailpt/input.css  -o $tailpt/output.css
 fi
 
 
-hugo
+hugo &&
+
+echo "" > $tailpt/output.css

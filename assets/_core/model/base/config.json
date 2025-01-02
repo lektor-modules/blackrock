@@ -1,0 +1,12 @@
+{
+    "devel" : true,
+    "debug" : true,
+    "style" : {
+        "tailwind"  : false,
+        "bootstrap" : false
+    },
+    "script" : {
+        "animax" : true,
+        "htmx"   : false
+    }
+}

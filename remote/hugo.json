@@ -1,0 +1,12 @@
+{
+    "disableKinds": [
+      "sitemap",
+      "taxonomy",
+      "term"
+    ],
+    "outputs": {
+      "home": [
+        "html"
+      ]
+    }
+  }

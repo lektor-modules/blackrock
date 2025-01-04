@@ -1,1 +1,12 @@
-{}
+{   
+    "mounts": [
+        {
+            "source": "content",
+            "target": "content"
+        },
+        {
+            "source": "prebuild/public/article",
+            "target": "content/article"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{{/* prebuild/layouts/index.html */}}
+
+{{ $path := "index.json" }}
+{{ $link := partial "rezget" ( dict "data" $path ) }}
+{{ with $link }}
+	{{ $data := unmarshal .Content }}
+	{{ range $keys, $type := $data }}
+		{{ if eq $keys "single" }}
+			{{ partial "single.html" (dict "data" $type ) }}
+		{{ else }}
+			{{ partial "group.html" (dict "data" . ) }}
+		{{ end }}
+	{{ end }}
+{{ end }}

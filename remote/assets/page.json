@@ -1,0 +1,22 @@
+[
+    {
+        "id"       : "bryan-plastic-1",
+        "title"    : "home",
+        "authors"  : [],
+        "menu"     : [],
+        "terms"    : [],
+        "tags"     : [],
+        "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png",
+        "content"  : "Condim uisque curae duis..."
+    },
+    {
+        "id"       : "bryan-plastic-1",
+        "title"    : "404",
+        "authors"  : [],
+        "menu"     : [],
+        "terms"    : [],
+        "tags"     : [],
+        "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png",
+        "content"  : "Condim uisque curae duis..."
+    }
+]

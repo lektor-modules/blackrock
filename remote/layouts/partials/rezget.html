@@ -1,0 +1,10 @@
+{{ $getsrc := .data }}
+{{ $source := "" }}
+
+{{ if or ( strings.Contains $getsrc "http://" ) ( strings.Contains $getsrc "https://" ) }}
+    {{ $source = resources.GetRemote $getsrc }}
+{{ else }}
+    {{ $source = resources.Get $getsrc }}
+{{ end }}
+
+{{ return  $source }}

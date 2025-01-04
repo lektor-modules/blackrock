@@ -13,8 +13,8 @@
 {{- end -}}
 
 
-{{- partial "core/src/postload/styles.html" ( dict "page" $page "site" $site ) -}}
-{{- partial "core/src/postload/script.html" ( dict "page" $page "site" $site ) -}}
+{{- partial "core/src/defer-styles.html" ( dict "page" $page "site" $site ) -}}
+{{- partial "core/src/defer-script.html" ( dict "page" $page "site" $site ) -}}
 
 
 {{- with resources.Get $json | transform.Unmarshal -}}

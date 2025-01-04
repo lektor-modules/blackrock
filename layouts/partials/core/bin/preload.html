@@ -17,14 +17,13 @@
 
 
 <head>
-	{{- partial "core/src/preload/native.html" ( dict "page" $page "site" $site ) -}}
-	{{- partial "core/src/preload/opengraph.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/meta-native.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/meta-opengraph.html" ( dict "page" $page "site" $site ) -}}
 
-
-	{{- partial "core/src/preload/styles.html" ( dict "page" $page "site" $site ) -}}
-	{{- partial "core/src/preload/script.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/head-script.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/head-styles.html" ( dict "page" $page "site" $site ) -}}
 	
-
+	
 	{{- with resources.Get $json | transform.Unmarshal -}}
 		{{- range $keys, $rows := $data  -}}
 			{{- partial "core/lib/render.html" (dict "page" $page "site" $site "data" $rows ) -}}
@@ -32,5 +31,5 @@
 	{{- end -}}
 
 
-	{{- partial "core/src/preload/jsonld.html" ( dict "page" $page "site" $site ) -}}
+	{{- partial "core/src/meta-jsonld.html" ( dict "page" $page "site" $site ) -}}
 </head>

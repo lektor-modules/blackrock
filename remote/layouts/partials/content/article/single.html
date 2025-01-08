@@ -1,0 +1,30 @@
+{{- $base := .base -}}
+{{- $data := .data -}}
+{{- $link := partial "library/rezget" ( dict "data" $data ) -}}
+
+
+{{- with $link -}}
+
+    {{- $data := unmarshal .Content -}}
+
+    {{- range $data -}}
+
+        {{- $path  := printf "%s/%s.json" $base .slugs -}}
+        {{- $link  := partial "library/rezget" ( dict "data" $path ) -}}
+
+        {{- with $link -}}
+
+            <!-- populate post data -->
+            {{- $meta := unmarshal .Content -}}
+            {{- $post := jsonify $meta -}}
+            {{- $name := urlize $meta.title -}}
+            {{- $type := $meta.format -}}
+ 
+            <!-- generate md file -->
+            {{- $postname := printf "%s/%s.md" $type $name -}}
+            {{- $postfile := resources.FromString $postname $post  -}}
+            {{- $datalink := $postfile.RelPermalink -}} 
+
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

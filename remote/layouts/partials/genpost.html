@@ -1,0 +1,21 @@
+<!-- BLAKROCK CONTENT GENERATOR -->
+{{- range $type, $endpoint := .page -}}
+
+    {{- $list_template := printf "content/%s/lister" $type  -}}
+    {{- $post_template := printf "content/%s/single" $type  -}}
+    {{- $base_resource := printf "%s/index.json" $endpoint  -}}
+    {{- $list_resource := printf "%s/lister.json" $endpoint -}}
+    
+    {{- if templates.Exists ( printf "partials/content/%s/lister.html" $type ) -}}
+        {{- partial $list_template (dict "base" $endpoint "data" $list_resource ) -}}
+    {{- else -}}
+        Template {{- $list_template -}} not exists
+    {{- end -}}
+
+    {{- if templates.Exists ( printf "partials/content/%s/single.html" $type ) -}}
+        {{- partial $post_template (dict "base" $endpoint "data" $base_resource ) -}}
+    {{- else -}}
+        Template {{- $post_template -}} not exists
+    {{- end -}}
+
+{{- end -}}

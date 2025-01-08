@@ -1,0 +1,9 @@
+{ 
+    "format"   : "lister",
+    "title"    : "Article List",
+    "slugs"    : "article",
+    "authors"  : [ "Al Muhdil Karim", "Hafidzah Karim" ],
+    "vendors"  : [ "Al Muhdil Karim", "Rasyid Karim" ],
+    "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png",
+    "content"  : "api/article/index.json"
+}

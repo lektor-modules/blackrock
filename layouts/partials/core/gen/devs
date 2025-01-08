@@ -1,0 +1,63 @@
+#!/bin/bash
+
+themes=$(jq '.theme' config/_default/params.json | sed -e 's/^"//' -e 's/"$//' )
+
+
+## preparation
+function blackrock_build_preparation () {
+
+    if [[ -d "./content" ]];then
+        rm -fr ./content
+    fi
+
+    if [[ -d "./public" ]];then
+        rm -fr ./public
+    fi
+
+    if [[ -d "./remote/public" ]];then
+        rm -fr ./remote/public
+    fi
+}
+
+
+
+## talwind generator
+function blackrock_build_gentailwind () {
+
+    twstat=$(jq '.tailwind' themes/$themes/assets/model/base/config.json | sed -e 's/^"//' -e 's/"$//' )
+    if [[ $twstat -eq "true" ]];then
+        tailpt=./assets/_core/script/vendor/tailwind
+        tailwindcss -c $tailpt/tailwind.config.js -i $tailpt/input.css  -o $tailpt/output.css
+    fi
+}
+
+## website generator
+function blackrock_devel_hugwebsites () {
+    mkdir content &&
+    cd ./remote &&
+    hugo  &&
+    sleep 3
+    rm public/index.html &&
+    cd .. &&
+    hugo server --disableFastRender
+}
+
+
+## post production
+function blackrock_style_postcleaner () {
+    echo "" > $tailpt/output.css
+}
+
+
+## website generate
+function blackrock_website_development () {
+    blackrock_build_preparation &&
+    blackrock_devel_hugwebsites
+}
+
+
+## init generator
+function blackrock_devel () {
+    blackrock_website_development
+}
+

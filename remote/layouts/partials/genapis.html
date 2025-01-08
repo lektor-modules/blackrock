@@ -1,0 +1,14 @@
+<!-- BLAKROCK API GENERATOR -->
+
+{{- range $type, $link := .page -}}
+
+    {{- $post := partial "library/rezget" ( dict "data" $link ) -}}
+    {{- $path := printf "genapi/%s" $type -}}
+
+    {{- if templates.Exists ( printf "partials/genapi/%s.html" $type ) -}}
+        {{- partial $path (dict "data" $post ) -}}
+    {{- else -}}
+        Template {{- $path -}} not exists
+    {{- end -}}
+
+{{- end -}}

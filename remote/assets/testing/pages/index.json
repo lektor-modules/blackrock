@@ -1,0 +1,17 @@
+[
+    {
+        "format"   : "pages",
+        "title"    : "Home",
+        "slugs"    : "home",
+        "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png",
+        "endpoint" : "api/pages/home.json"
+    },
+    { 
+       
+        "format"   : "pages",
+        "title"    : "404",
+        "slugs"    : "404",
+        "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png",
+        "endpoint" : "api/article/404.json"
+    }
+]

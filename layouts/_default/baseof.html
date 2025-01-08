@@ -3,7 +3,8 @@
 <body>
 	{{- partial "core/bin/loader.html"   . -}}
 	{{- partial "core/bin/header.html"   . -}}
-	{{- partial "core/bin/content.html"  . -}}
+	{{- block "main" . }}{{- end }}
 	{{- partial "core/bin/footer.html"   . -}}
+	{{- block "data" . }}{{- end }}
 	{{- partial "core/bin/postload.html" . -}}
 </body></html>

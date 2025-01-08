@@ -1,26 +1,23 @@
 #!/bin/bash
 
+source ./layouts/partials/core/gen/misc
+source ./layouts/partials/core/gen/devs
+source ./layouts/partials/core/gen/build
 
-## preparation
-if [[ -d "./public" ]];then
-    rm -fr ./public
+
+
+blackrock_head
+
+echo "-------------------------"
+echo "Available mode"
+echo "-------------------------"
+echo " 1. Build "
+echo " 2. Devel "
+read -p "Select Your Mode : " blackbirdmainmode
+
+
+if [[ 1 -eq $blackbirdmainmode ]];then
+    blackrock_build
+else
+    blackrock_devel
 fi
-
-if [[ -d "./remote/public" ]];then
-    rm -fr ./remote/public
-fi
-
-
-## talwind generator
-themes=$(jq '.theme' config/_default/params.json | sed -e 's/^"//' -e 's/"$//' )
-twstat=$(jq '.tailwind' themes/$themes/assets/model/base/config.json | sed -e 's/^"//' -e 's/"$//' )
-
-if [[ $twstat -eq "true" ]];then
-    tailpt=./assets/_core/script/vendor/tailwind
-    tailwindcss -c $tailpt/tailwind.config.js -i $tailpt/input.css  -o $tailpt/output.css
-fi
-
-
-hugo &&
-
-echo "" > $tailpt/output.css

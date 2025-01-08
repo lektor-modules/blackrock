@@ -1,0 +1,19 @@
+{{- $base := .base -}}
+{{- $data := .data -}}
+{{- $link := partial "library/rezget" ( dict "data" $data ) -}}
+
+{{- with $link -}}
+    
+    <!-- populate post data -->
+    {{- $meta := unmarshal .Content -}}
+    {{- $post := jsonify $meta -}}
+    {{- $name := urlize $meta.title -}}
+    {{- $type := $meta.format -}}
+
+
+    <!-- generate md file -->
+    {{- $postname := printf "article/_index.md" -}}
+    {{- $postfile := resources.FromString $postname $post  -}}
+    {{- $datalink := $postfile.RelPermalink -}} 
+
+{{- end -}}

@@ -5,7 +5,11 @@
             "target": "content"
         },
         {
-            "source": "prebuild/public/article",
+            "source": "remote/public",
+            "target": "content"
+        },
+        {
+            "source": "remote/public/article",
             "target": "content/article"
         }
     ]

@@ -1,0 +1,27 @@
+[
+    {
+        "format"   : "article",
+        "title"    : "Bryan Plastic the First",
+        "slugs"    : "bryan-plastic-the-first",
+        "authors"  : [ "Al Muhdil Karim", "Rasyid Karim" ],
+        "editors"  : [ "Al Muhdil Karim", "Rasyid Karim" ],
+        "vendors"  : [ "tvone", "metrotv" ],
+        "terms"    : [ "robotik"  ],
+        "tags"     : [ "android", "filsafat" ],
+        "link"     : "/article/bryan-plastic-the-first",
+        "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png"
+    },
+    { 
+       
+        "format"   : "article",
+        "title"    : "Gus Vinyl the First",
+        "slugs"    : "gus-vinyl-the-first",
+        "authors"  : [ "Al Muhdil Karim", "Hafidzah Karim" ],
+        "editors"  : [ "Al Muhdil Karim", "Rasyid Karim" ],
+        "vendors"  : [ "sctv", "enews" ],
+        "terms"    : [ "" ],
+        "tags"     : [],
+        "link"     : "/article/gus-vinyl-the-first",
+        "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png"
+    }
+]

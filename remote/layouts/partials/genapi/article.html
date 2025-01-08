@@ -1,0 +1,32 @@
+
+<!-- BLAKROCK ARTICLE API GENERATOR -->
+
+
+<!-- get resource data -->
+{{- $type := .data -}}
+{{- $link := printf "%s/index.json" $type -}}
+{{- $path := partial "library/rezget" ( dict "data" $link ) -}}
+{{- $data := unmarshal $path  -}} 
+
+
+<!-- generate index data -->
+{{- with $data -}}
+    {{- $list_data := . | jsonify  -}} 
+    {{- $list_gens := resources.FromString "api/article/index.json" $list_data  -}}
+    {{- $list_rels := $list_gens.RelPermalink -}} 
+{{- end -}}
+
+
+<!-- generate single data -->
+{{- with $data -}} 
+    {{- range . -}}
+        {{- if ne .format "lister" -}}
+            {{- $post_path := printf "%s/%s.json" $type ( urlize .title ) -}}
+            {{- $post_link := partial "library/rezget" ( dict "data" $post_path ) -}}
+            {{- $post_data := unmarshal $post_link | jsonify -}}
+            {{- $post_path := printf "api/article/%s.json" ( urlize .title )  -}}
+            {{- $post_file := resources.FromString $post_path $post_data  -}}
+            {{- $post_link := $post_file.RelPermalink -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

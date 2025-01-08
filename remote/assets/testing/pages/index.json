@@ -12,6 +12,14 @@
         "title"    : "404",
         "slugs"    : "404",
         "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png",
-        "endpoint" : "api/article/404.json"
+        "endpoint" : "api/pages/404.json"
+    },
+    { 
+       
+        "format"   : "pages",
+        "title"    : "Search Result",
+        "slugs"    : "search",
+        "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png",
+        "endpoint" : "api/pages/search.json"
     }
 ]

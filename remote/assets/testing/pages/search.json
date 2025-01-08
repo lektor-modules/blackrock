@@ -1,7 +1,7 @@
 {
     "format"   : "pages",
-    "title"    : "404",
-    "slugs"    : "404",
+    "title"    : "Search Result",
+    "slugs"    : "search",
     "authors"  : [],
     "menu"     : [],
     "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png",

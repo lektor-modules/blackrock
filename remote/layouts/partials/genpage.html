@@ -1,0 +1,38 @@
+<!-- BLAKROCK MODULE GENERATOR -->
+{{- range $type, $endpoint := .page -}}
+    {{- if eq $type "pages" -}}
+
+        {{- $gets_resource := partial "library/rezget" ( dict "data" ( printf "%s/index.json" $endpoint ) ) -}}
+        {{- $data_resource :=  unmarshal $gets_resource -}}
+
+        {{- with $data_resource -}}
+            {{ range . }}
+
+                {{- $page_endpoint := partial "library/rezget" ( dict "data" ( printf "%s/%s.json" $endpoint .slugs ) ) -}}
+                {{- $page_resource := partial "library/rezget" ( dict "data" $page_endpoint ) -}}
+
+                {{ if eq .slugs "home" }}
+
+                    {{- if templates.Exists "partials/content/pages/home.html"  -}}
+                        {{ partial "content/pages/home.html" ( dict "data" $page_resource ) }}
+                    {{- end -}}
+                    
+
+                {{ else if eq .slugs "404" }}
+
+                    {{- if templates.Exists "partials/content/pages/404.html" -}}
+                        {{ partial "content/pages/404.html" ( dict "data" $page_resource ) }}
+                    {{- end -}}
+
+ 
+                {{ else if eq .slugs "search" }}
+
+                    {{- if templates.Exists "partials/content/pages/search.html" -}}
+                        {{ partial "content/pages/search.html" ( dict "data" $page_resource ) }}
+                    {{- end -}}
+                    
+                {{ end }}
+            {{ end }}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

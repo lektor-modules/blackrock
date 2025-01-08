@@ -1,9 +1,9 @@
-{
-    "format"   : "home",
-    "title"    : "home",
-    "slugs"    : "bryan-plastic-1",
-    "authors"  : [],
-    "menu"     : [],
-    "thumbs"   : "https://monsters-api.netlify.app/png_4526566859420692809.png",
-    "content"  : "Condim uisque curae duis..."
+{ 
+    "format"   : "pages",
+    "title"    : "Home",
+    "slugs"    : "home",
+    "authors"  : [ "Al Muhdil Karim", "Hafidzah Karim" ],
+    "vendors"  : [ "Al Muhdil Karim", "Rasyid Karim" ],
+    "thumbs"   : "https://monsters-api.netlify.app/png_7480160596753705284.png",
+    "content"  : "api/article/index.json"
 }

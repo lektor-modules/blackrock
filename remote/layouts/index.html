@@ -3,7 +3,9 @@
 {{- $link := partial "library/rezget" ( dict "data" "testing/localhost.json" ) -}}
 
 {{- with $link -}}
+
 	{{- $data := unmarshal .Content -}}
 	{{- partial "genapis" (dict "page" $data ) -}}
+	{{- partial "genpage" (dict "page" $data ) -}}
 	{{- partial "genpost" (dict "page" $data ) -}}
 {{- end -}}

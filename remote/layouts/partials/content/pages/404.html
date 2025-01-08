@@ -1,0 +1,9 @@
+{{- $meta := unmarshal .data.Content -}}
+{{- $post := jsonify $meta -}}
+{{- $name := urlize $meta.slugs -}}
+{{- $type := $meta.format -}}
+
+<!-- generate md file -->
+{{- $postname := printf "%s.md" $name -}}
+{{- $postfile := resources.FromString $postname $post  -}}
+{{- $datalink := $postfile.RelPermalink -}} 

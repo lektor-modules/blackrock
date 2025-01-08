@@ -1,22 +1,26 @@
 <!-- BLAKROCK CONTENT GENERATOR -->
-{{- range $type, $endpoint := .page -}}
+{{- range $type, $path := .page -}}
 
     {{- if ne $type "pages" -}}
-        {{- $list_template := printf "content/%s/lister" $type  -}}
-        {{- $post_template := printf "content/%s/single" $type  -}}
-        {{- $base_resource := printf "%s/index.json" $endpoint  -}}
-        {{- $list_resource := printf "%s/lister.json" $endpoint -}}
-        
-        {{- if templates.Exists ( printf "partials/content/%s/lister.html" $type ) -}}
-            {{- partial $list_template (dict "base" $endpoint "data" $list_resource ) -}}
+
+        {{- $list := printf "%s/archive.json" $path -}}
+
+        {{- if templates.Exists ( printf "partials/content/%s/archive.html" $type ) -}}
+            {{- $tpl := printf "content/%s/archive" $type -}}
+            {{- partial $tpl (dict "base" $path "data" $list ) -}}
         {{- else -}}
-            Template {{- $list_template -}} not exists
+            {{- partial "content/default/archive.html" (dict "base" $path "data" $list ) -}}
         {{- end -}}
 
+
+        {{- $post := printf "%s/index.json" $path -}}
         {{- if templates.Exists ( printf "partials/content/%s/single.html" $type ) -}}
-            {{- partial $post_template (dict "base" $endpoint "data" $base_resource ) -}}
+            {{- $tpl := printf "content/%s/single" $type -}}
+            {{- partial $tpl (dict "base" $path "data" $post ) -}}
         {{- else -}}
-            Template {{- $post_template -}} not exists
+             {{- partial "content/default/single.html" (dict "base" $path "data" $post ) -}}
         {{- end -}}
+
     {{- end -}}
+
 {{- end -}}
